@@ -1,4 +1,4 @@
-module github.com/thetulga/p
+module github.com/thetulga/gopher-parking
 
 go 1.13
 

@@ -1,1 +1,6 @@
+### Fresh hot-reload
 ./tmp
+
+### macOS
+# General
+.DS_Store

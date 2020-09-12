@@ -3,13 +3,10 @@ package main
 import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
-	// "fyne.io/fyne/canvas"
-	// "fyne.io/fyne/layout"
 	"fyne.io/fyne/theme"
 	"fyne.io/fyne/widget"
-	"github.com/thetulga/p/screens"
-	// "image/color"
-	// "log"
+	"github.com/thetulga/gopher-parking/models"
+	"github.com/thetulga/gopher-parking/screens"
 )
 
 const preferenceCurrentTab = "currentTab"
@@ -18,12 +15,13 @@ func main() {
 	a := app.New()
 	w := a.NewWindow("Box Layout")
 	w.Resize(fyne.NewSize(1200, 800))
+	models.DB = new(models.Database)
+	HBox := widget.NewVBox()
+	models.DB.ReceiptsContainer = HBox
 	tabs := widget.NewTabContainer(
-		widget.NewTabItemWithIcon("Талон", theme.SearchIcon(), screens.HomeScreen()),
-		widget.NewTabItemWithIcon("Graphics", theme.DocumentCreateIcon(), screens.GraphicsScreen()),
-		widget.NewTabItemWithIcon("Widgets", theme.CheckButtonCheckedIcon(), screens.WidgetScreen()),
-		widget.NewTabItemWithIcon("Containers", theme.ViewRestoreIcon(), screens.ContainerScreen()),
-		widget.NewTabItemWithIcon("WindowsSS", theme.ViewFullScreenIcon(), screens.DialogScreen(w)))
+		widget.NewTabItemWithIcon("Home", theme.HomeIcon(), screens.TicketScreen(widget.NewVScrollContainer(HBox))),
+	)
+
 	tabs.SetTabLocation(widget.TabLocationLeading)
 	tabs.SelectTabIndex(a.Preferences().Int(preferenceCurrentTab))
 	w.SetContent(tabs)
