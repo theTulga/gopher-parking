@@ -18,7 +18,7 @@ func makeLabelGroup() fyne.CanvasObject {
 
 func newTicketButton(label string, printText string) fyne.Widget {
 	btn := widget.NewButton(label, func() {
-		r := models.NewReceipt("1234", label, printText)
+		r := models.NewReceipt("1d34123", label, printText)
 		log.Print("ADDING ", label)
 		models.DB.AddReceipt(r)
 	})

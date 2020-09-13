@@ -2,6 +2,7 @@ package models
 
 import (
 	"fyne.io/fyne/widget"
+	"github.com/thetulga/gopher-parking/util"
 )
 
 var DB *Database
@@ -17,6 +18,7 @@ func (db Database) AddReceipt(r Receipt) {
 	db.Receipts = append(db.Receipts, r)
 	label := widget.NewLabel(r.Label)
 	db.ReceiptsContainer.Append(label)
+	util.Print(r.Label)
 }
 
 func (db Database) AddElement(e *Entry) {
