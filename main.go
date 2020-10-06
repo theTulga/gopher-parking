@@ -16,10 +16,8 @@ func main() {
 	w := a.NewWindow("Box Layout")
 	w.Resize(fyne.NewSize(1200, 800))
 	models.DB = new(models.Database)
-	HBox := widget.NewVBox()
-	models.DB.ReceiptsContainer = HBox
 	tabs := widget.NewTabContainer(
-		widget.NewTabItemWithIcon("Home", theme.HomeIcon(), screens.TicketScreen(widget.NewVScrollContainer(HBox))),
+		widget.NewTabItemWithIcon("Home", theme.HomeIcon(), screens.HomeScreen()),
 	)
 
 	tabs.SetTabLocation(widget.TabLocationLeading)
