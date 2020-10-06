@@ -28,23 +28,15 @@ func PrintPrinterNames() {
 }
 
 func Print(str string) {
-	name, err := printer.Default() // returns name of Default Printer as string
-	GenerateQRCode(str)
-	log.Print("Moving onto printing")
+	log.Print("Printer name: ", "AnyDesk Printer")
+	p, err := printer.Open("AnyDesk Printer") // Opens the named printer and returns a *Printer
 	if err != nil {
 	    log.Fatal(err)
 	}
-	log.Print("Printer name: ", name)
-	p, err := printer.Open(name) // Opens the named printer and returns a *Printer
-	if err != nil {
-	    log.Fatal(err)
-	}
-	log.Print("1")
 	err = p.StartDocument("test", "RAW") // test: doc name, text: doc type
 	if err != nil {
 	    log.Fatal(err)
 	}
-	log.Print("2")
 	err = p.StartPage() // begin a new page
 	if err != nil {
 	    log.Fatal(err)
