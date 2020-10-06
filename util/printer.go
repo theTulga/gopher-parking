@@ -29,11 +29,11 @@ func PrintPrinterNames() {
 
 func Print(str string) {
 	log.Print("Printer name: ", "AnyDesk Printer")
-	p, err := printer.Open("AnyDesk Printer") // Opens the named printer and returns a *Printer
+	p, err := printer.Open("80mm Series Printer") // Opens the named printer and returns a *Printer
 	if err != nil {
 	    log.Fatal(err)
 	}
-	err = p.StartDocument("test", "RAW") // test: doc name, text: doc type
+	err = p.StartDocument("test", "text") // test: doc name, text: doc type
 	if err != nil {
 	    log.Fatal(err)
 	}
@@ -41,7 +41,7 @@ func Print(str string) {
 	if err != nil {
 	    log.Fatal(err)
 	}
-	n, err := p.Write([]byte("Hello, Printer!")) // Send some text to the printer
+	n, err := p.Write([]byte("Suudliin Mashin orloo\nAraas n tom mashin orloo")) // Send some text to the printer
 	if err != nil {
 	    log.Fatal(err)
 	}

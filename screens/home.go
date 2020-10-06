@@ -21,8 +21,8 @@ func newTicketButton(label string, printText string) fyne.Widget {
 
 
 func entryContainer() fyne.Widget {
-	truckButton := newTicketButton("TRUCK", "ТТТТТТТТТТТТТТ.")
-	suvButton := newTicketButton("SUV", "Дунд тээврийн хэрэгслийн талон хэвлэгдлээ.")
+	truckButton := newTicketButton("1.5-аас дээш даацтай том оврийн ачааны машин.", "ТТТТТТТТТТТТТТ.")
+	suvButton := newTicketButton("1.5 тонн даацтай жижиг оврын ачааны машин", "Дунд тээврийн хэрэгслийн талон хэвлэгдлээ.")
 	sedanButton := newTicketButton("SEDAN", "Жижиг тээврийн хэрэгслийн талон хэвлэгдлээ.")
 	group := widget.NewGroup("Print Receipt", truckButton, suvButton, sedanButton)
 	return group
