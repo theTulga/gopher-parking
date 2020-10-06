@@ -2,18 +2,26 @@ package models
 
 import (
 	"fyne.io/fyne"
+	// "fyne.io/fyne/widget"
 	"time"
+	"github.com/google/uuid"
+	"github.com/skip2/go-qrcode"
+	"log"
 )
 
 type Receipt struct {
-	id        string
+	id        uuid.UUID
 	Label     string `default:"label"`
 	PrintText string `default:"text"`
 	EnteredAt time.Time
 	Widget    fyne.Widget
 }
 
-func NewReceipt(id string, label string, content string) Receipt {
+func NewReceipt(id uuid.UUID, label string, content string) Receipt {
+	err := qrcode.WriteFile(id.String(), qrcode.Medium, 256, "./public/images/" + id.String() + ".png")
+	if err != nil {
+		log.Print(err)
+	}
 	return Receipt{
 		id:        id,
 		Label:     label,
@@ -21,25 +29,3 @@ func NewReceipt(id string, label string, content string) Receipt {
 		EnteredAt: time.Now(),
 	}
 }
-
-// func NewReceiptUI() receiptUI {
-// 	UI := receiptUI{
-// 		Container: fyne.NewContainer(),
-// 		List:      []fyne.Widget{},
-// 	}
-
-// 	for _, r := range models.DB.Receipts {
-// 		label := widget.NewLabel(r.Label)
-// 		UI.List = append(UI.List, label)
-// 		UI.Container.AddObject(label)
-// 	}
-
-// 	return UI
-// }
-
-// func (ui *receiptUI) AddReceipt(r models.Receipt) {
-
-// 	label := widget.NewLabel(r.Label)
-// 	ui.Container.AddObject(label)
-
-// }

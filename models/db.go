@@ -16,9 +16,9 @@ type Database struct {
 func (db Database) AddReceipt(r Receipt) {
 
 	db.Receipts = append(db.Receipts, r)
-	label := widget.NewLabel(r.Label)
-	db.ReceiptsContainer.Append(label)
-	util.Print(r.Label)
+	// label := widget.NewLabel(r.Label)
+	// db.ReceiptsContainer.Append(label)
+	util.Print(r.id.String())
 }
 
 func (db Database) AddElement(e *Entry) {
