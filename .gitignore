@@ -1,8 +1,8 @@
 ### Fresh hot-reload
-./tmp
+tmp/*
 
 ### macOS
 # General
-.DS_Store
-.idea
-./public
+.DS_Store/
+.idea/
+public/

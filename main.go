@@ -7,11 +7,13 @@ import (
 	"fyne.io/fyne/widget"
 	"github.com/thetulga/gopher-parking/models"
 	"github.com/thetulga/gopher-parking/screens"
+	"fmt"
 )
 
 const preferenceCurrentTab = "currentTab"
 
 func main() {
+	fmt.Print("HELLO")
 	a := app.New()
 	w := a.NewWindow("Box Layout")
 	w.Resize(fyne.NewSize(1200, 800))
