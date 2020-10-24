@@ -6,6 +6,7 @@ import (
 	"log"
 	"golang.org/x/sys/windows"
 	"unsafe"
+	"fmt"
 )
 
 var (
@@ -14,13 +15,15 @@ var (
 	procPortOpenW = mod.NewProc("POS_Port_OpenW")
 	procTestPage = mod.NewProc("POS_Control_PrintTestpage") 
 	procPrintStringW = mod.NewProc("POS_Output_PrintStringW") 
+	procGetPrinterSTatusTSPL = mod.NewProc("GetPrinterStatusTSPL")
 )
 
 func LoadPrinterDLL() {
 	 
 	printerHandle, returnV, callErr := procPortOpenW.Call(
-		uintptr(unsafe.Pointer(windows.StringToUTF16Ptr("SP-USB001"))),
-		uintptr(1002))
+		uintptr(unsafe.Pointer(windows.StringToUTF16Ptr("SP-USB1"))),
+		uintptr(1002),
+		uintptr(0))
 	log.Print(printerHandle)
 	log.Print(returnV)
 	log.Print(callErr)
@@ -29,7 +32,21 @@ func LoadPrinterDLL() {
 	log.Print(ret)
 	log.Print(returnV)
 	log.Print(callErr)
+	
+	ret, returnV, callErr = procGetPrinterSTatusTSPL.Call(printerHandle)
+	log.Print(ret)
+	log.Print(returnV)
+	log.Print(callErr)
+	
+	log.Print(procTestPage)
+	for _, m := range procTestPage {
 
+    // m is a map[string]interface.
+    // loop over keys and values in the map.
+    for k, v := range m {
+        fmt.Println(k, "value is", v)
+    }
+}
 
 }
 
