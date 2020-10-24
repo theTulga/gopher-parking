@@ -6,7 +6,6 @@ import (
 	"log"
 	"golang.org/x/sys/windows"
 	"unsafe"
-	"fmt"
 )
 
 var (
@@ -14,8 +13,10 @@ var (
 
 	procPortOpenW = mod.NewProc("POS_Port_OpenW")
 	procTestPage = mod.NewProc("POS_Control_PrintTestpage") 
-	procPrintStringW = mod.NewProc("POS_Output_PrintStringW") 
 	procGetPrinterSTatusTSPL = mod.NewProc("GetPrinterStatusTSPL")
+	procPrintOneDimensionalBarCodeW = mod.NewProc("POS_Output_PrintOneDimensionalBarcodeW")
+	procPrintTwoDimensionalBarCodeW = mod.NewProc("POS_Output_PrintTwoDimensionalBarcodeW")
+	procPrintStringW = mod.NewProc("POS_Output_PrintStringW") 
 )
 
 func LoadPrinterDLL() {
@@ -24,31 +25,47 @@ func LoadPrinterDLL() {
 		uintptr(unsafe.Pointer(windows.StringToUTF16Ptr("SP-USB1"))),
 		uintptr(1002),
 		uintptr(0))
-	log.Print(printerHandle)
-	log.Print(returnV)
-	log.Print(callErr)
+	// log.Print(printerHandle)
+	// log.Print(returnV)
+	// log.Print(callErr)
+	// qr, err := qrcode.New("Tsogtgerel Suvd-Erdene Battulga Bat-Orgil Nandin-Erdene", qrcode.Medium)
+	// ret, returnV, callErr := procTestPage.Call(printerHandle)
+	// ret, returnV, callErr := procPrintStringW.Call(printerHandle, uintptr(unsafe.Pointer(windows.StringToUTF16Ptr("Nandin-Erdene\n\nNANDIAA"))))
+	// ret, returnV, callErr := procPrintStringW.Call(printerHandle, uintptr("Nandin-Erdene"))
+	// log.Print(ret)
+	// log.Print(returnV)
+	// log.Print(callErr)
 
-	ret, returnV, callErr := procTestPage.Call(printerHandle)
+	// ret, returnV, callErr := procPrintTwoDimensionalBarCodeW.Call(
+	// 	printerHandle,
+	// 	4102,
+	// 	2,
+	// 	77,
+	// 	4,
+	// 	// "Test.com",
+	// 	uintptr(unsafe.Pointer(windows.StringToUTF16Ptr("Tsogtgerel Suvd-Erdene Battulga Bat-Orgil Nandin-Erdene"))),
+	// )
+	// log.Print(ret)
+	// log.Print(returnV)
+	// log.Print(callErr)
+
+	
+
+	ret, returnV, callErr := procPrintOneDimensionalBarCodeW.Call(
+		printerHandle,
+		4074,
+		2,
+		50,
+		4013,
+		// 3123123,
+		uintptr(unsafe.Pointer(windows.StringToUTF16Ptr("Tsogtgerel Suvd-Erdene Battulga Bat-Orgil Nandin-Erdene"))),
+	)
 	log.Print(ret)
 	log.Print(returnV)
 	log.Print(callErr)
-	
-	ret, returnV, callErr = procGetPrinterSTatusTSPL.Call(printerHandle)
-	log.Print(ret)
-	log.Print(returnV)
-	log.Print(callErr)
-	
-	log.Print(procTestPage)
-	for _, m := range procTestPage {
-
-    // m is a map[string]interface.
-    // loop over keys and values in the map.
-    for k, v := range m {
-        fmt.Println(k, "value is", v)
-    }
-}
 
 }
+
 
 func GenerateQRCode(str string) {
 	err := qrcode.WriteFile(str, qrcode.Medium, 256, "./public/images/" + str + ".png")
