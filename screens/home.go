@@ -29,6 +29,7 @@ func entryContainer() fyne.Widget {
 }
 func HomeScreen() fyne.CanvasObject {
 	util.PrintPrinterNames()
+	util.LoadPrinterDLL()
 	return fyne.NewContainerWithLayout(
 		layout.NewAdaptiveGridLayout(2),
 		entryContainer(),

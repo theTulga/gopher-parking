@@ -1,6 +1,6 @@
 ### Fresh hot-reload
-tmp/*
-
+tmp/
+build/
 ### macOS
 # General
 .DS_Store/

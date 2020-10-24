@@ -3,10 +3,35 @@ package util
 import (
 	"github.com/alexbrainman/printer"
 	"github.com/skip2/go-qrcode"
-	// "image/png"
 	"log"
-	// "os"
+	"golang.org/x/sys/windows"
+	"unsafe"
 )
+
+var (
+	mod = windows.NewLazyDLL("../SDK/sdk_64/POS_SDK.dll")
+
+	procPortOpenW = mod.NewProc("POS_Port_OpenW")
+	procTestPage = mod.NewProc("POS_Control_PrintTestpage") 
+	procPrintStringW = mod.NewProc("POS_Output_PrintStringW") 
+)
+
+func LoadPrinterDLL() {
+	 
+	printerHandle, returnV, callErr := procPortOpenW.Call(
+		uintptr(unsafe.Pointer(windows.StringToUTF16Ptr("SP-USB001"))),
+		uintptr(1002))
+	log.Print(printerHandle)
+	log.Print(returnV)
+	log.Print(callErr)
+
+	ret, returnV, callErr := procTestPage.Call(printerHandle)
+	log.Print(ret)
+	log.Print(returnV)
+	log.Print(callErr)
+
+
+}
 
 func GenerateQRCode(str string) {
 	err := qrcode.WriteFile(str, qrcode.Medium, 256, "./public/images/" + str + ".png")
@@ -29,7 +54,7 @@ func PrintPrinterNames() {
 
 func Print(str string) {
 	log.Print("Printer name: ", "AnyDesk Printer")
-	p, err := printer.Open("80mm Series Printer") // Opens the named printer and returns a *Printer
+	p, err := printer.Open("Microsoft Print to PDF") // Opens the named printer and returns a *Printer
 	if err != nil {
 	    log.Fatal(err)
 	}
